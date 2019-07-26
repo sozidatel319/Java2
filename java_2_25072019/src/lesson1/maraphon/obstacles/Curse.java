@@ -1,20 +1,20 @@
 package lesson1.maraphon.obstacles;
 
+
 import lesson1.maraphon.competitors.Competitor;
+import lesson1.maraphon.competitors.Team;
 
 public class Curse {
-    Obstacle[] obstacles;
+    private Obstacle[] obstacles;
 
+    public void doIt(Team team) {
 
-    public void doIt(Competitor[] teammember) {
-
-        for (int i = 0; i < obstacles.length; i++) {
-            for (int j = 0; j < teammember.length; j++) {
-                if (!teammember[j].isDistance()) break;
-                obstacles[i].doIt(teammember[j]);
+        for (Obstacle o : obstacles) {
+            for (Competitor com : team.getCompetitors()) {
+                if (com.isDistance()) {
+                    o.doIt(com);
+                }
             }
-
-
         }
     }
 

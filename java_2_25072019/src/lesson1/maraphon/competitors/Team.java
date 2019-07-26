@@ -1,9 +1,9 @@
 package lesson1.maraphon.competitors;
 
 public class Team {
-    String teamName;
-    Competitor[] competitors;
-    final String s = "Участник № ";
+    private String teamName;
+    private Competitor[] competitors;
+    private final String s = "Участник № ";
 
     public Team(String teamName, Competitor... competitors) {
         this.teamName = teamName;
@@ -22,26 +22,18 @@ public class Team {
 
     public void showResults() {
 
-        for (int i = 0; i < competitors.length; i++) {
-            if (competitors[i] instanceof Animal) {
-                if (((Animal) competitors[i]).onDistance) {
-                    System.out.println(s + i + " из команды " + teamName + " прошел полосу препятсвий");
-                } else {
-                    System.out.println(s + i + " команды " + teamName + " " + ((Animal) competitors[i]).type + " " + ((Animal) competitors[i]).name + " провалил полосу препятсвий");
-                }
+        String type;
 
-            } else if (competitors[i] instanceof Human) {
-                if (((Human) competitors[i]).onDistance) {
-                    System.out.println(s + i + " из команды " + teamName + " прошел полосу препятсвий");
-                } else {
-                    System.out.println(s + i + " из команды " + teamName + " провалил полосу препятсвий");
-                }
-            }
+        for (int i = 0; i < competitors.length; i++) {
+            if (competitors[i] instanceof Animal) type = " " + ((Animal) competitors[i]).type;
+            else type = " Человек";
+            if (competitors[i].isDistance()) {
+                System.out.println(s + i + " из команды " + teamName + type + " прошел полосу препятсвий");
+            }else{System.out.println(s + i + " из команды " + teamName + type + " провалил полосу препятсвий");}
         }
     }
-
-    public Competitor[] Competitor() {
-        return this.competitors;
+    public Competitor[] getCompetitors() {
+        return competitors;
     }
 }
 

@@ -6,7 +6,7 @@ import lesson1.maraphon.obstacles.*;
 public class Main {
     public static void main(String[] args) {
 
-        /*
+
         Competitor[] competitors = {
                 new Human("Bob"),
                 new Cat("Barsik"),
@@ -29,12 +29,12 @@ public class Main {
             c.info();
         }
 
-*/
+
 
         Team team = new Team("Везучие", new Cat("Барсик"), new Dog("Jack"), new Human("Борис"));
         Curse curse = new Curse(new Cross(80), new Wall(2), new Water(10));
 
-        curse.doIt(team.Competitor());
+        curse.doIt(team);
         team.info();
         team.showResults();
     }
