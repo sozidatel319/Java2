@@ -34,8 +34,8 @@ public class Main {
         Team team = new Team("Везучие", new Cat("Барсик"), new Dog("Jack"), new Human("Борис"));
         Curse curse = new Curse(new Cross(80), new Wall(2), new Water(10));
 
-        curse.doIt(team);
+        curse.doIt(team.Competitor());
         team.info();
-        //team.showResults();
+        team.showResults();
     }
 }
