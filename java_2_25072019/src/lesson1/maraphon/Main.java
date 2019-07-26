@@ -1,17 +1,12 @@
 package lesson1.maraphon;
 
 import lesson1.maraphon.competitors.*;
-import lesson1.maraphon.obstacles.Cross;
-import lesson1.maraphon.obstacles.Obstacle;
-import lesson1.maraphon.obstacles.Wall;
-import lesson1.maraphon.obstacles.Water;
+import lesson1.maraphon.obstacles.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        Team team = new Team("Везучие", new Cat("Барсик"));
-
-
+        /*
         Competitor[] competitors = {
                 new Human("Bob"),
                 new Cat("Barsik"),
@@ -30,14 +25,17 @@ public class Main {
             }
         }
 
-
-        for (Obstacle o : obstacles) {
-            o.doIt(team);
-        }
-
-
         for (Competitor c : competitors) {
             c.info();
         }
+
+*/
+
+        Team team = new Team("Везучие", new Cat("Барсик"), new Dog("Jack"), new Human("Борис"));
+        Curse curse = new Curse(new Cross(80), new Wall(2), new Water(10));
+
+        curse.doIt(team);
+        team.info();
+        //team.showResults();
     }
 }
