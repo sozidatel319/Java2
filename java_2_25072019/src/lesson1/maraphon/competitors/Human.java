@@ -21,15 +21,6 @@ public class Human implements Competitor {
         this.onDistance = true;
     }
 
-    public Human(String name, String team) {
-        if (!team.equals("")) this.team = team;
-        this.name = name;
-        this.maxRunDistance = 3000;
-        this.maxJumpHeight = 2;
-        this.maxSwimDistance = 100;
-        this.onDistance = true;
-    }
-
     @Override
     public void run(int dist) {
         String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";

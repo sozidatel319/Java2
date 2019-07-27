@@ -52,6 +52,7 @@ public class Team {
             result = s + i + " из команды " + teamName + type + " "+ name + suscess + "полосу препятствий";
             System.out.println(result);
         }
+        System.out.println("");
     }
 
     public Competitor[] getCompetitors() {
