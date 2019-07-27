@@ -3,6 +3,8 @@ package lesson1.maraphon.competitors;
 public class Animal implements Competitor {
     String type;
     String name;
+    String team;
+    int teamMemberNumber;
 
     int maxRunDistance;
     int maxJumpHeight;
@@ -21,37 +23,47 @@ public class Animal implements Competitor {
 
     @Override
     public void run(int dist) {
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
+        String success = "";
         if (dist <= maxRunDistance) {
-            System.out.println(type + " " + name + " справился с кроссом");
+            success = " справился с кроссом";
         } else {
-            System.out.println(type + " " + name + " провалил кроссом");
+            success = " провалил кросс";
             onDistance = false;
         }
+        System.out.println(result + type + " " + name + success);
     }
 
     @Override
     public void jump(int height) {
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
+        String success = "";
         if (height <= maxJumpHeight) {
-            System.out.println(type + " " + name + " справился с прыжком");
+            success = " справился с прыжком";
         } else {
-            System.out.println(type + " " + name + " провалил прыжок");
+            success = " провалил прыжок";
             onDistance = false;
         }
+        System.out.println(result + type + " " + name + success);
     }
 
     @Override
     public void swim(int dist) {
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
+        String success = "";
         if (maxSwimDistance == 0) {
-            System.out.println(type + " " + name + " плавать не умеет");
+            success = " плавать не умеет";
+            System.out.println(result + type + " " + name + success);
             onDistance = false;
             return;
         }
         if (dist <= maxSwimDistance) {
-            System.out.println(type + " " + name + " проплыл удачно");
+            success = " проплыл удачно";
         } else {
-            System.out.println(type + " " + name + " не смог проплыть");
+            success = " не смог проплыть";
             onDistance = false;
         }
+        System.out.println(result + type + " " + name + success);
     }
 
     @Override
@@ -61,6 +73,19 @@ public class Animal implements Competitor {
 
     @Override
     public void info() {
-        System.out.print(type + " " + name +" На дистанции: " + onDistance);
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
+        System.out.println(result + type + " " + name + " На дистанции: " + onDistance);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public void setTeamMemberNumber(int teamMemberNumber) {
+        this.teamMemberNumber = teamMemberNumber;
     }
 }

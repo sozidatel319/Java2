@@ -3,6 +3,9 @@ package lesson1.maraphon.competitors;
 public class Human implements Competitor {
 
     String name;
+    String team;
+    String success = "";
+    int teamMemberNumber;
 
     int maxRunDistance;
     int maxJumpHeight;
@@ -10,7 +13,16 @@ public class Human implements Competitor {
 
     boolean onDistance;
 
-    public Human( String name) {
+    public Human(String name) {
+        this.name = name;
+        this.maxRunDistance = 3000;
+        this.maxJumpHeight = 2;
+        this.maxSwimDistance = 100;
+        this.onDistance = true;
+    }
+
+    public Human(String name, String team) {
+        if (!team.equals("")) this.team = team;
         this.name = name;
         this.maxRunDistance = 3000;
         this.maxJumpHeight = 2;
@@ -20,37 +32,43 @@ public class Human implements Competitor {
 
     @Override
     public void run(int dist) {
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
         if (dist <= maxRunDistance) {
-            System.out.println(name + " справился с кроссом");
+            success = " справился с кроссом";
         } else {
-            System.out.println(name + " провалил кроссом");
+            success = " провалил кросс";
             onDistance = false;
         }
+        System.out.println(result + "Гуманоид" + " " + name + success);
     }
 
     @Override
     public void jump(int height) {
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
         if (height <= maxJumpHeight) {
-            System.out.println(name + " справился с прыжком");
+            success = " справился с прыжком";
         } else {
-            System.out.println(name + " провалил прыжок");
+            success = " провалил прыжок";
             onDistance = false;
         }
+        System.out.println(result + "Гуманоид" + " " + name + success);
     }
 
     @Override
     public void swim(int dist) {
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
         if (maxSwimDistance == 0) {
-            System.out.println(name + " плавать не умеет");
+            success = " плавать не умеет";
             onDistance = false;
             return;
         }
         if (dist <= maxSwimDistance) {
-            System.out.println(name + " проплыл удачно");
+            success = " проплыл удачно";
         } else {
-            System.out.println(name + " не смог проплыть");
+            success = " не смог проплыть";
             onDistance = false;
         }
+        System.out.println(result + "Гуманоид" + " " + name + success);
     }
 
     @Override
@@ -60,6 +78,19 @@ public class Human implements Competitor {
 
     @Override
     public void info() {
-        System.out.print(name +" На дистанции: " + onDistance);
+        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
+        System.out.println(result + "Гуманоид" + " " + name + " На дистанции: " + onDistance);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public void setTeamMemberNumber(int teamMemberNumber) {
+        this.teamMemberNumber = teamMemberNumber;
     }
 }
