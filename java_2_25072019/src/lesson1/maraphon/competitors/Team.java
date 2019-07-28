@@ -10,6 +10,7 @@ public class Team {
         this.teamName = teamName;
         this.competitors = competitors;
 
+
         for (int i = 0; i < competitors.length; i++) {
 
             competitors[i].setTeam(teamName);
@@ -19,8 +20,8 @@ public class Team {
 
     public void info() {
         System.out.println("");
-        for (int i = 0; i < competitors.length; i++) {
-            competitors[i].info();
+        for (Competitor competitor : competitors) {
+            competitor.info();
         }
         System.out.println("");
     }
