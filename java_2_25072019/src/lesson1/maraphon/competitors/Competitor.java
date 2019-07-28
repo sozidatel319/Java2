@@ -6,4 +6,8 @@ public interface Competitor {
     void swim(int dist);
     boolean isDistance();
     void info();
+    String getType();
+    String getName();
+    void setTeam(String team);
+    void setTeamMemberNumber(int teamMemberNumber);
 }

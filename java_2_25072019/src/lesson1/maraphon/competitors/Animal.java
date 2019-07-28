@@ -23,7 +23,6 @@ public class Animal implements Competitor {
 
     @Override
     public void run(int dist) {
-        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
         String success = "";
         if (dist <= maxRunDistance) {
             success = " справился с кроссом";
@@ -31,12 +30,11 @@ public class Animal implements Competitor {
             success = " провалил кросс";
             onDistance = false;
         }
-        System.out.println(result + type + " " + name + success);
+        System.out.println(haveTeam() + type + " " + name + success);
     }
 
     @Override
     public void jump(int height) {
-        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
         String success = "";
         if (height <= maxJumpHeight) {
             success = " справился с прыжком";
@@ -44,16 +42,15 @@ public class Animal implements Competitor {
             success = " провалил прыжок";
             onDistance = false;
         }
-        System.out.println(result + type + " " + name + success);
+        System.out.println(haveTeam() + type + " " + name + success);
     }
 
     @Override
     public void swim(int dist) {
-        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
         String success = "";
         if (maxSwimDistance == 0) {
             success = " плавать не умеет";
-            System.out.println(result + type + " " + name + success);
+            System.out.println(haveTeam() + type + " " + name + success);
             onDistance = false;
             return;
         }
@@ -63,7 +60,7 @@ public class Animal implements Competitor {
             success = " не смог проплыть";
             onDistance = false;
         }
-        System.out.println(result + type + " " + name + success);
+        System.out.println(haveTeam() + type + " " + name + success);
     }
 
     @Override
@@ -73,8 +70,7 @@ public class Animal implements Competitor {
 
     @Override
     public void info() {
-        String result = team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
-        System.out.println(result + type + " " + name + " На дистанции: " + onDistance);
+        System.out.println(haveTeam() + type + " " + name + " На дистанции: " + onDistance);
     }
 
     public String getName() {
@@ -87,5 +83,13 @@ public class Animal implements Competitor {
 
     public void setTeamMemberNumber(int teamMemberNumber) {
         this.teamMemberNumber = teamMemberNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    private String haveTeam(){
+        return team == null ? "" : "Участник № " + teamMemberNumber + " из команды " + team + " ";
     }
 }
