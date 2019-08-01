@@ -36,7 +36,7 @@ public class Main {
                 try {
                     count = Integer.parseInt(arr[i][j]);
                 } catch (NumberFormatException e) {
-                    throw new MyArrayDataExeption("ячейка ошибки " + "i " + i + " j " + j);
+                    throw new MyArrayDataExeption(i,j);
                 }
                 sum += count;
             }
