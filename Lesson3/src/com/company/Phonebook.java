@@ -20,17 +20,13 @@ public class Phonebook {
             phonenumbers.add(number);
             numbers.put(family, phonenumbers);
         } else {
-            phonenumbers.add(number);
-
-            for (HashMap.Entry<String, ArrayList<String>> ent : numbers.entrySet()) {
-                if (ent.getKey().equals(family)) ent.getValue().add(number);
-            }
+            numbers.get(family).add(number);
         }
     }
 
     private static void get(String family) {
-        for (HashMap.Entry<String, ArrayList<String>> entry : numbers.entrySet()) {
-            if (entry.getKey().equals(family)) System.out.println(entry.getKey() + " " + entry.getValue());
+        if (numbers.containsKey(family)) {
+            System.out.println(family + " " + numbers.get(family));
         }
     }
 
