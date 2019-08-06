@@ -1,0 +1,42 @@
+.button{
+    -fx-background-color: red;
+    -fx-font-size: 20;
+}
+.button:hover{
+    -fx-background-color: white;
+}
+
+.text-field{
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-background-color: purple;
+}
+
+.text-field:hover{
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+.text-area{
+    -fx-background-color: blue;
+    -fx-highlight-fill: blue;
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+    -fx-control-inner-background: black;
+}
+
+.text-area:hover{
+    -fx-control-inner-background: white;
+    -fx-text-fill: black;
+}
+
+.menu-bar{
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+    -fx-highlight-fill: blue;
+    -fx-background-color: blue;
+    -fx-display-caret:true;
+    -fx-control-inner-background: red;
+}
+
+
