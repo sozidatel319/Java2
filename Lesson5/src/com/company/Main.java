@@ -47,14 +47,14 @@ public class Main {
 
         Thread thread1 = new Thread(() -> {
             for (int i = 0; i < arr1.length; i++) {
-                arr1[i] = (float) (arr1[i] * Math.sin(0.2f + i / 10) * Math.cos(0.2f + i/ 10) * Math.cos(0.4f + i / 10));
+                arr1[i] = (float) (arr1[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i/ 5) * Math.cos(0.4f + i / 2));
             }
             System.arraycopy(arr1, 0, arr, 0, h);
         });
 
         Thread thread2 = new Thread(() -> {
             for (int i = 0; i < arr2.length; i++) {
-                arr2[i] = (float) (arr2[i] * Math.sin(0.2f + i / 10) * Math.cos(0.2f + i / 10) * Math.cos(0.4f + i / 10));
+                arr2[i] = (float) (arr2[i] * Math.sin(0.2f + (i+h) / 5) * Math.cos(0.2f + (i+h) / 5) * Math.cos(0.4f + (i+h) / 2));
             }
             System.arraycopy(arr2, 0, arr, h, h);
         });
