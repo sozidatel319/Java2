@@ -5,49 +5,67 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-
+    static DataInputStream inputStream;
+    static DataOutputStream outputStream;
     public static void main(String[] args) {
-        ServerSocket server = null;
+        ServerSocket serverSocket = null;
         Socket socket = null;
 
         try {
-            server = new ServerSocket(8189);
+            serverSocket = new ServerSocket(8189);
             System.out.println("Сервер запущен");
-            socket = server.accept();
+            socket = serverSocket.accept();
+            inputStream = new DataInputStream(socket.getInputStream());
+            outputStream = new DataOutputStream(socket.getOutputStream());
             System.out.println("Клиент подключился");
+            Server server1 = new Server();
+            server1.sendMsg();
+            server1.receiveMsg();
 
-            DataInputStream sc = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-            while (true) {
-                String str = sc.readUTF();
-                if (str.equals("/end")) {
-                    System.out.println("Клиент отключился");
-                    break;
-                }
-                System.out.println("client: " + str);
-
-                out.writeUTF("Сервер: " + br.readLine());
-                out.flush();
-
-
-            }
-        } catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
-        } finally {
+        }finally {
             try {
+                System.out.println("Нет клиента, до свидания!");
                 socket.close();
+                serverSocket.close();
             } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                server.close();
-            } catch (IOException e) {
+                System.out.println("Закрылся неудачно! Недовольный сервер");
                 e.printStackTrace();
             }
         }
+    }
+
+    public void sendMsg(){
+
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        new Thread(() -> {
+            try {
+                while (true) {
+                    String msg = br.readLine();
+                    outputStream.writeUTF(msg);
+                    outputStream.flush();
+                }
+            } catch (IOException e) {
+                System.out.println("Ошибка отправки со стороны сервера!");
+            }
+        }).start();
+    }
+
+    public void receiveMsg() {
+
+        new Thread(() -> {
+            try {
+                while (true) {
+                    String str = inputStream.readUTF();
+                    System.out.println("server: " + str);
+                }
+            } catch (IOException e) {
+                System.out.println("Ошибка получения со стороны сервера!!");
+            }
+        }).start();
     }
 }
 

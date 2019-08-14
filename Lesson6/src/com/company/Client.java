@@ -16,6 +16,7 @@ public class Client {
         try {
             Client client = new Client();
             c = new Socket(IP_ADRESS, PORT);
+            System.out.println("Подключился к серверу успешно!");
             inputStream = new DataInputStream(c.getInputStream());
             outputStream = new DataOutputStream(c.getOutputStream());
 
@@ -24,11 +25,18 @@ public class Client {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                System.out.println("Нет сервера, до свидания!");
+                c.close();
+            } catch (IOException e) {
+                System.out.println("Закрылся неудачно! Недовольный клиент!");
+                e.printStackTrace();
+            }
         }
     }
 
-    public void sendMsg() throws IOException {
-
+    public void sendMsg() {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -36,12 +44,11 @@ public class Client {
             try {
                 while (true) {
                     String msg = br.readLine();
-                    if (msg.isEmpty()) receiveMsg();
                     outputStream.writeUTF(msg);
                     outputStream.flush();
                 }
             } catch (IOException e) {
-
+                System.out.println("Ошибка отправки со стороны клиента!");
             }
         }).start();
     }
@@ -50,9 +57,12 @@ public class Client {
 
         new Thread(() -> {
             try {
-                System.out.println(inputStream.readUTF());
+                while (true) {
+                    String str = inputStream.readUTF();
+                    System.out.println("server: " + str);
+                }
             } catch (IOException e) {
-
+                System.out.println("Ошибка получения со стороны клиента!");
             }
         }).start();
     }
