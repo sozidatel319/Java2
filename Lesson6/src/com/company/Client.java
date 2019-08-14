@@ -25,14 +25,6 @@ public class Client {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            try {
-                System.out.println("Нет сервера, до свидания!");
-                c.close();
-            } catch (IOException e) {
-                System.out.println("Закрылся неудачно! Недовольный клиент!");
-                e.printStackTrace();
-            }
         }
     }
 
@@ -46,6 +38,10 @@ public class Client {
                     String msg = br.readLine();
                     outputStream.writeUTF(msg);
                     outputStream.flush();
+                    if (msg.equals("/end")) {
+                        c.close();
+                        break;
+                    }
                 }
             } catch (IOException e) {
                 System.out.println("Ошибка отправки со стороны клиента!");
@@ -58,8 +54,7 @@ public class Client {
         new Thread(() -> {
             try {
                 while (true) {
-                    String str = inputStream.readUTF();
-                    System.out.println("server: " + str);
+                    System.out.println("server: " + inputStream.readUTF());
                 }
             } catch (IOException e) {
                 System.out.println("Ошибка получения со стороны клиента!");
