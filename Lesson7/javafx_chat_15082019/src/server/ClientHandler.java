@@ -1,5 +1,9 @@
 package server;
 
+import client.Controller;
+import client.Main;
+import javafx.stage.Stage;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -34,16 +38,17 @@ public class ClientHandler {
                         String str = in.readUTF();
                         if (str.startsWith("/auth ")) {
                             String[] token = str.split(" ");
-//                            String[] token = str.split(" +",3);
                             String newNick = AuthService.getNickByLoginAndPass(token[1], token[2]);
-                            if (newNick != null) {
+                            if (newNick != null & server.authorizationError(newNick)) {
                                 sendMSG("/authok");
                                 nick = newNick;
                                 server.subscribe(this);
-                                System.out.println("Клиент " + nick + " авторизовался");
+                                server.broadcastMsg("Клиент " + nick + " авторизовался");
+                                this.sendMSG("Сейчас онлайн : " + server.status());
                                 break;
                             } else {
-                                sendMSG("Неверный логин / пароль");
+                                if (!server.authorizationError(newNick)) sendMSG("Этот пользователь уже в сети!");
+                                else sendMSG("Неверный логин / пароль");
                             }
                         }
                     }
@@ -53,8 +58,10 @@ public class ClientHandler {
                         if (str.equals("/end")) {
                             break;
                         }
-
-                        server.broadcastMsg(nick + " : " + str);
+                        if (str.startsWith("/w ")) {
+                            String[] s = str.split(" ", 3);
+                            server.privateMsg(s[1], nick + " шепчет Вам: " + s[2]);
+                        } else server.broadcastMsg(nick + " : " + str);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -81,5 +88,4 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
-
 }

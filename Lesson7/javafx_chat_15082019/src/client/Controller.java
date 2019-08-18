@@ -2,18 +2,16 @@ package client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Controller {
     @FXML
@@ -31,7 +29,6 @@ public class Controller {
 
     private boolean isAuthorized;
 
-
     Socket socket;
     DataInputStream in;
     DataOutputStream out;
@@ -39,18 +36,19 @@ public class Controller {
     final String IP_ADRESS = "localhost";
     final int PORT = 8189;
 
+
     public void setAuthorized(boolean authorized) {
         isAuthorized = authorized;
         if(isAuthorized){
             upperPanel.setVisible(false);
             bottomPanel.setVisible(true);
+
         } else{
             upperPanel.setVisible(true);
             bottomPanel.setVisible(false);
         }
 
     }
-
 
     public void connect(){
         try {
@@ -70,6 +68,7 @@ public class Controller {
                         textArea.appendText(str + "\n");
                     }
                     // цикл работы
+                    textArea.clear();
                     while (true) {
                         String str = in.readUTF();
                         textArea.appendText(str + "\n");
@@ -109,6 +108,7 @@ public class Controller {
             out.writeUTF("/auth "+ loginField.getText()+" "+ passwordField.getText());
             loginField.clear();
             passwordField.clear();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

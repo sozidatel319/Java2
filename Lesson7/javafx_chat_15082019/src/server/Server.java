@@ -1,11 +1,10 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Server {
@@ -39,17 +38,44 @@ public class Server {
         }
     }
 
-    public void broadcastMsg(String msg){
-        for (ClientHandler c:clients ) {
+    public void broadcastMsg(String msg) {
+        for (ClientHandler c : clients) {
             c.sendMSG(msg);
         }
     }
 
-    public void subscribe(ClientHandler clientHandler){
+    public void privateMsg(String nick, String msg) {
+        for (ClientHandler client : clients) {
+            if (client.nick.equals(nick)) {
+                client.sendMSG(msg);
+                break;
+            }
+        }
+
+    }
+
+    public void subscribe(ClientHandler clientHandler) {
         clients.add(clientHandler);
     }
 
-    public void unsubscribe(ClientHandler clientHandler){
+
+    public void unsubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
     }
+
+    public boolean authorizationError(String nick) {
+        for (ClientHandler client : clients) {
+            if (client.nick.equals(nick)) return false;
+        }
+        return true;
+    }
+
+    public String status() {
+        ArrayList arrayList = new ArrayList();
+        for (ClientHandler client : clients) {
+            arrayList.add(client.nick);
+        }
+        return arrayList.toString();
+    }
 }
+
