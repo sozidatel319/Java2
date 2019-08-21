@@ -1,5 +1,7 @@
 package server;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -39,18 +41,21 @@ public class ClientHandler {
 //                            String[] token = str.split(" +",3);
                             String newNick = AuthService.getNickByLoginAndPass(token[1], token[2]);
                             if (newNick != null) {
-                                if(!server.isLoginAuthorised(token[1])){
-                                    sendMSG("/authok "+newNick);
+                                if (!server.isLoginAuthorised(token[1])) {
+                                    sendMSG("/authok " + newNick);
                                     nick = newNick;
                                     login = token[1];
                                     server.subscribe(this);
                                     System.out.println("Клиент " + nick + " авторизовался");
+                                    timeout(0);
                                     break;
-                                }else{
+                                } else {
                                     sendMSG("Учетная запись уже используется");
+                                    timeout(120000);
                                 }
                             } else {
                                 sendMSG("Неверный логин / пароль");
+                                timeout(120000);
                             }
                         }
                     }
@@ -65,7 +70,7 @@ public class ClientHandler {
                         if (str.startsWith("/w")) {
                             String[] token = str.split(" +", 3);
                             server.broadcastMsg(token[2], nick, token[1]);
-                        }else {
+                        } else {
                             server.broadcastMsg(str, nick);
                         }
                     }
@@ -102,5 +107,14 @@ public class ClientHandler {
 
     public String getLogin() {
         return login;
+    }
+
+    public void timeout(int ms) throws SocketException {
+        try {
+            socket.setSoTimeout(ms);
+            System.out.println("Время пошло!");
+        } catch (SocketException e) {
+            throw new SocketException();
+        }
     }
 }
